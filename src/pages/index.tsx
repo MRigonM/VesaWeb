@@ -4,9 +4,33 @@ import CustomImage from "@/assets/images/image.jpg"
 import Button from "@/components/shared/Button";
 import Card from "@/components/shared/Card";
 import { Rocket, BarChart, ShieldCheck} from "lucide-react";
+import useFetch from "../hooks/useFetch";
+import {useEffect, useState} from "react";
+import {CircularProgress} from "@mui/material";
 
+
+export interface Post {
+  id: string;
+  title: string;
+  body: string;
+}
 
 export default function Home() {
+  const { data: initialPosts, loading} = useFetch<Post[]>(
+      "https://jsonplaceholder.typicode.com/posts"
+  );
+  const [posts, setPosts] = useState<Post[] | null>(null);
+  useEffect(() => {
+    if (initialPosts){
+      setPosts(initialPosts);
+    }
+  }, [initialPosts]);
+
+  const handleDelete = (id: string) => {
+    if (posts) {
+      setPosts(posts.filter((post) => post.id !== id));
+    }
+  }
   return (
     <div className="pt-14">
       <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
@@ -96,6 +120,33 @@ export default function Home() {
                   onClick={() => alert("Redirecting...")}
           />
         </motion.section>
+        {/* Blog Section */}
+        <div className="grid grid-cols-3 py-20 bg-gray-200">
+            {loading ? (
+            <CircularProgress/>
+            ) : (
+                <>
+                  {posts && posts?.map((post) => (
+                      <motion.section
+                      key={post.id}
+                      className="max-w-6xl py-20 px-6 text-center"
+                      initial={{ scale: 0.8 }}
+                      animate={{ scale: 1 }}
+                      transition={{ duration: 1 }}
+                      >
+                        <h2 className="text-4xl font-bold mb-6 text-yellow-600 line-clamp-2 uppercase">
+                          {post.title}
+                        </h2>
+                        <p className="text-gray-700 mb-6">{post.body}</p>
+                        <button
+                            onClick={() => handleDelete(post.id)}
+                            className="px-6 py-2 bg-red-600 text-white rounded-xl hover:bg-red-700 transition"
+                        >Fshij postin</button>
+                      </motion.section>
+                  ))}
+                </>
+            )}
+          </div>
         {/* Contact Section */}
         <motion.section
         className="w-full py-20 bg-yellow-600 text-black text-center"

@@ -9,6 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@mui/material": "^7.0.1",
     "classnames": "^2.5.1",
     "framer-motion": "^12.6.3",
     "lucide-react": "^0.487.0",

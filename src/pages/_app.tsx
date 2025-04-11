@@ -23,11 +23,11 @@ export default function App({ Component, pageProps }: AppProps) {
 
       <meta
         name="viewport"
-        content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scale=no" />
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
       <meta
-        http-equiv="Content-Security-Policy"
-        content="upgrade-insecure-request" />
+        httpEquiv="Content-Security-Policy"
+        content="upgrade-insecure-requests" />
 
       <meta property="og:type" content="article" />
       <meta property="fb:app_id" content="{fb-id}" />
