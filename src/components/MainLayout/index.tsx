@@ -15,7 +15,7 @@ export function MainLayout(props:Props){
             <title>{props.name}</title>
         </Head>
         <Header />
-        <main>{props.children}</main>
+        <main className="bg-white">{props.children}</main>
         <Footer/>
     </div>;
 }

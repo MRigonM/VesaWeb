@@ -23,6 +23,10 @@ export function Header(){
             name:"Contact Us",
             pathName:"/contact",
         },
+        {
+            name:"Blogs",
+            pathName:"/blogs",
+        }
 
     ]
     function cs(arg0: string, arg1: { "underline fnt-semibold": boolean; }): string | undefined {
