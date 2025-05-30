@@ -10,6 +10,8 @@
 "paths": {
   "@/components/*": ["components/*"],
   "@/assets/*": ["assets/*"],
+  "@/lib/*": ["lib/*"],
+  "@/api/*": ["api/*"],
   "@/styles/*": ["styles/*"],
   "@/src/*": ["src/*"]
 }

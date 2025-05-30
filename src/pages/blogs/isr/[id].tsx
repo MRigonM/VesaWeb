@@ -12,7 +12,11 @@ export const getStaticProps: GetStaticProps = async ({params}) => {
 
     const res = await fetch(`https://jsonplaceholder.typicode.com/posts/${params?.id}`);
     const post = await res.json();
-    return {props: {post}};
+    return {
+        props: {post},
+        revalidate: 10, // 10 seconds
+        notFound: !post.id, // 404 if post not found
+    };
 
 
 }
@@ -26,7 +30,7 @@ export default function Blog({post}: any) {
             <h1 className="text-4xl text-center font-bold mb-6 text-yellow-600 line-clamp-2 uppercase">{post.title}</h1>
             <p className="text-sm text-gray-500 mt-4">{post.body}</p>
 
-            <p className="text-sm text-gray-500"> Renderuar ne build time </p>
+            <p className="text-sm text-gray-500"> Rifreskohet automatikisht cdo 10 sekonda ne sfond. </p>
         </div>
     );
 }
