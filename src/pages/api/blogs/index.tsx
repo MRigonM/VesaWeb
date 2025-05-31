@@ -1,5 +1,5 @@
 ﻿import type {NextApiRequest, NextApiResponse} from "next"
-import {createBlog, getBlogs} from "@/api/services/Blog";
+import {createBlog, getBlogs} from "../services/Blog";
 
 export default async function handler(
     req: NextApiRequest,
