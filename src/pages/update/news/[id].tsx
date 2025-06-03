@@ -1,27 +1,27 @@
 ﻿import {useEffect, useState} from "react";
 import useFetch from "../../../hooks/useFetch";
-import {Blog} from "@/api/models/Blog";
+import {News} from "@/api/models/News";
 import {useRouter} from "next/router";
 
-export  default function UpdateBlog(){
+export  default function UpdateNews(){
     const router = useRouter();
     const {id} = router.query;
-    const[newBlog, setNewBlog] = useState({title :"", body:""});
-    const { data: existingBlog, loading, put} = useFetch<Blog>(`/api/blogs/${id}`);
+    const[newNews, setNewNews] = useState({title :"", body:""});
+    const { data: existingNews, loading, put} = useFetch<News>(`/api/news/${id}`);
 
     useEffect(() => {
-        if(existingBlog) {
-            setNewBlog({
-                title: existingBlog.title,
-                body: existingBlog.body,
+        if(existingNews) {
+            setNewNews({
+                title: existingNews.title,
+                body: existingNews.body,
             })
         }
-    }, [existingBlog]);
+    }, [existingNews]);
 
     const handleUpdate = async () => {
-        if(!newBlog.title || !newBlog.body || !id) return;
-        await put(newBlog);
-        router.push("/blogs");
+        if(!newNews.title || !newNews.body || !id) return;
+        await put(newNews);
+        router.push("/news");
     }
 
     if(loading) return <p className="text-center mt-10">Loading...</p>
@@ -31,30 +31,30 @@ export  default function UpdateBlog(){
         <div className="flex flex-col items-center justify-center min-h-screen gap-y-20">
             <div className="mb-10 max-w-2xl mx-auto bg-white p-6 rounded-xl shadow-md">
                 <h2 className="text-black text-2xl font-semibold mb-4">
-                    Update Blog
+                    Update News
                 </h2>
                 <input
                     type="text"
                     placeholder="Title"
-                    value={newBlog.title}
-                    onChange={(e) => setNewBlog({ ...newBlog, title: e.target.value })}
+                    value={newNews.title}
+                    onChange={(e) => setNewNews({ ...newNews, title: e.target.value })}
                     className="w-full px-4 py-2 mb-4 border rounded placeholder-gray-400 text-black"
                 />
                 <textarea
                     placeholder="Permabajtja"
-                    value={newBlog.body}
-                    onChange={(e) => setNewBlog({ ...newBlog, body: e.target.value })}
+                    value={newNews.body}
+                    onChange={(e) => setNewNews({ ...newNews, body: e.target.value })}
                     className="w-full px-4 py-2 mb-4 border rounded placeholder-gray-400 text-black"
                 />
                 <button
                     onClick={handleUpdate}
                     className="px-6 py-2 bg-green-600 text-white rounded-xl hover:bg-green-700 transition"
                     >
-                    Update Blog
+                    Update News
                 </button>
             </div>
         </div>
     </div>
     )
 }
-UpdateBlog.displayName = "UpdateBlog | My app";
+UpdateNews.displayName = "UpdateNews | My app";

@@ -3,7 +3,7 @@ import {useEffect, useState} from "react";
 import {CircularProgress} from "@mui/material";
 import {motion} from "framer-motion";
 import Link from "next/link";
-import {Blog} from "../api/models/Blog";
+import {Blog} from "@/api/models/Blog";
 import {useRouter} from "next/router";
 
 export interface Post {

@@ -11,8 +11,8 @@ interface Props {
 const Button = (props: Props) => {
     const {text, onClick, variant = "primary", type = "button"} = props;
     const buttonStyles = {
-        primary: "bg-yellow-600 hover:bg-yellow-700 text-white",
-        secondary: "bg-gray-800 hover:bg-gray-900 text-white",
+        primary: "bg-purple-700 hover:bg-purple-800 text-white shadow-lg",
+        secondary: "bg-white border border-purple-700 hover:bg-gray-900 text-purple-700 shadow-md",
         tertiary: "bg-gray-200 hover:bg-gray-300 text-gray-800",
         quaternary: "bg-gray-300 hover:bg-gray-400 text-gray-800",
     };
