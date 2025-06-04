@@ -154,7 +154,7 @@ export default function Home() {
                 animate={{opacity: 1}}
                 transition={{duration: 1}}
             >
-                <h2 className="text-4xl font-bold mb-6">Kontaktoni me Ne</h2>
+                <h2 className="text-4xl font-bold mb-6"> Na Kontaktoni</h2>
                 <p className="mb-1"> Email contact@mycompany.com</p>
                 <p className="mb-1">TEL: +383 123 456 789</p>
                 <p className="mb-6">Adresa:Prishtine, Kosove</p>
