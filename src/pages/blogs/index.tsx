@@ -1,10 +1,11 @@
 ﻿import useFetch from "../../hooks/useFetch";
 import {useEffect, useState} from "react";
-import {CircularProgress} from "@mui/material";
+import {CircularProgress, IconButton, Tooltip} from "@mui/material";
 import {motion} from "framer-motion";
 import Link from "next/link";
 import {Blog} from "@/api/models/Blog";
 import {useRouter} from "next/router";
+import {Edit, Trash, View, ViewIcon} from "lucide-react";
 
 export interface Post {
     id: string;
@@ -52,178 +53,191 @@ export default function Blogs() {
     };
 
     return (
-        <div className="pt-12">
-            <div className="flex flex-col items-center justify-center min-h-screen gap-y-20">
-                {/* Blogs nga DATABAZA*/}
-                {blogsLoading ? (
-                    <CircularProgress/>
-                ) : (
-                    <div className="bg-gray-200 w-full">
-                        <h1 className="text-4xl font-bold pt-20 pb-6 text-black text-center">
-                            Shfaqja e Blogave nga databaza jonë
-                        </h1>
-                        <div className="grid grid-cols-3">
-                            {blogsData && blogsData.length > 0 ? (
-                                blogsData.map((post: Blog) => (
+        <div className="pt-14 bg-gray-50 flex flex-col items-center min-h-screen gap-y-20">
+            {/* Blogs nga DATABAZA*/}
+            {blogsLoading ? (
+                <CircularProgress/>
+            ) : (
+                <div className="bg-gradient-to-b from-gray-100 to-gray-200 w-full py-16 px-4 sm:px-6 lg:px-16">
+                    <h1 className="text-5xl font-extrabold mb-12 pb-6 text-purple-800 drop-shadow-sm text-center">
+                        Shfaqja e Blogave nga databaza jonë
+                    </h1>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+                        {blogsData && blogsData.length > 0 ? (
+                            blogsData.map((post: Blog) => (
+                                <motion.section
+                                    key={post._id}
+                                    className="bg-white rounded-3xl shadow-lg p-8 flex flex-col justify-between hover:shadow-xl transition duration-300"
+                                    initial={{opacity: 0, y: 20}}
+                                    animate={{opacity: 1, y: 0}}
+                                    transition={{duration: 0.6}}
+                                >
+                                    <h2 className="text-2xl font-bold mb-4 text-purple-700 line-clamp-2 uppercase">
+                                        {post.title}
+                                    </h2>
+                                    <p className="text-gray-700 mb-6 line-clamp-4">{post.body}</p>
+                                    <div className="flex flex-col sm:flex-row justify-end gap-4 mt-auto">
+                                        <Tooltip title="Update post">
+                                            <IconButton
+                                                onClick={() => router.push("update/blog/" + post._id)}
+                                            >
+                                                <Edit className="text-gray-400"/>
+                                            </IconButton>
+                                        </Tooltip>
+                                        <Tooltip title="Delete post">
+                                            <IconButton
+                                                onClick={() => handleDeleteBlog(post._id!)}
+                                            >
+                                                <Trash className="text-gray-400"/>
+                                            </IconButton>
+                                        </Tooltip>
+                                    </div>
+                                </motion.section>
+                            ))
+                        ) : (
+                            <div className="py-20 text-xl font-medium text-gray-600 text-center">
+                                No blogs in the database
+                            </div>
+                        )}
+                    </div>
+                    <div className="text-center mt-16">
+                        <Link href={"/create/blog"}>
+                            <button
+                                className="px-6 py-2 bg-purple-700 hover:bg-purple-800 text-white text-lg rounded-2xl transition">
+                                + Create Blog
+                            </button>
+                        </Link>
+                    </div>
+                </div>
+            )}
+
+            {/* Blogs SSG*/}
+            {loading ? (
+                <CircularProgress/>
+            ) : (
+                <div className="bg-gradient-to-b from-gray-100 to-gray-200 w-full py-16 px-4 sm:px-6 lg:px-16">
+                    <h1 className="text-5xl font-extrabold mb-12 text-purple-800 drop-shadow-sm text-center">
+                        Shfaqja e blogut në single page me Static dhe Server Side Generation (SSG)
+                    </h1>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+                        {posts &&
+                            posts.slice(0, 3)
+                                .map((post: Post) => (
                                     <motion.section
-                                        key={post._id}
-                                        className="max-w-6xl py-20 px-6 text-center"
-                                        initial={{scale: 0.8}}
-                                        animate={{scale: 1}}
-                                        transition={{duration: 1}}>
-                                        <h2 className="text-4xl font-bold mb-6 text-yellow-600 line-clamp-2 uppercase">
+                                        key={post.id}
+                                        className="bg-white rounded-3xl shadow-lg p-8 flex flex-col justify-between hover:shadow-xl transition duration-300"
+                                        initial={{opacity: 0, y: 20}}
+                                        animate={{opacity: 1, y: 0}}
+                                        transition={{duration: 0.6}}
+                                    >
+                                        <h2 className="text-2xl font-bold mb-2 text-purple-700 uppercase line-clamp-2">
                                             {post.title}
                                         </h2>
-                                        <p className="text-gray-700 mb-6">{post.body}</p>
-                                        <div className="mb-6">
-                                            <Link href={"/update/blog/" + post._id}>
-                                                <button
-                                                    className="px-6 py-2 bg-yellow-600 hover:bg-yellow-700 text-white rounded-xl transition">
-                                                    Update
-                                                </button>
-                                            </Link>
+                                        <p className="text-gray-700 mb-6 line-clamp-4">{post.body}</p>
+                                        <div className="flex flex-col sm:flex-row justify-end gap-4 mt-auto">
+                                            <Tooltip title="Post details">
+                                                <IconButton
+                                                    onClick={() => router.push("blogs/ssg/" + post.id)}
+                                                >
+                                                    <View className="text-gray-400"/>
+                                                </IconButton>
+                                            </Tooltip>
+                                            <Tooltip title="Delete post">
+                                                <IconButton
+                                                    onClick={() => handleDelete(post.id)}
+                                                >
+                                                    <Trash className="text-gray-400"/>
+                                                </IconButton>
+                                            </Tooltip>
                                         </div>
-                                        <button
-                                            onClick={() => handleDeleteBlog(post._id!)}
-                                            className="px-6 py-2 bg-red-600 hover:bg-red-700 text-white transition">
-                                            Delete Post
-                                        </button>
-                                    </motion.section>
-                                ))
-                            ) : (
-                                <div className="col-span-3 py-20">
-                                    <p className="text-xl font-bold pb-10 text-black text-center">
-                                        Nuk ka blogs ne databaze
-                                    </p>
-                                </div>
-                            )}
-                        </div>
-                        <div className="text-center pb-10">
-                            <Link href={"/create/blog"}>
-                                <button
-                                    className="px-6 py-2 bg-yellow-600 hover:bg-yellow-700 text-white rounded-xl transition">
-                                    Krijo blog
-                                </button>
-                            </Link>
-                        </div>
+                                    </motion.section>))}
                     </div>
-                )}
-
-                {/* Blogs SSG*/}
-                {loading ? (
-                    <CircularProgress/>
-                ) : (
-                    <div className="bg-gray-200">
-                        <h1 className="text-4xl font-bold py-20 pb-6 text-black text-center">
-                            Shfaqja e blogut në single page me Static dhe Server Side Generation (SSG)
-                        </h1>
-                        <div className="grid grid-cols-3">
-                            {posts &&
-                                posts.slice(0, 3)
-                                    .map((post: Post) => (
-                                        <motion.section
-                                            key={post.id}
-                                            className="max-w-6xl py-20 px-6 text-center"
-                                            initial={{scale: 0.8}}
-                                            animate={{scale: 1}}
-                                            transition={{duration: 1}}>
-                                            <h2 className="text-4xl font-bold mb-6 text-yellow-600 line-clamp-2 uppercase">
-                                                {post.title}
-                                            </h2>
-                                            <p className="text-gray-700 mb-6">{post.body}</p>
-                                            <div className="mb-6">
-                                                <Link href={"/blogs/ssg/" + post.id}>
-                                                    <button
-                                                        className="px-6 py-2 bg-yellow-600 hover:bg-yellow-700 text-white rounded-xl transition">
-                                                        Shiko Detajet
-                                                    </button>
-                                                </Link>
-                                            </div>
-                                            <button onClick={() => handleDelete(post.id)}
-                                                    className="px-6 py-2 bg-red-600 hover:bg-red-700 text-white transition">
-                                                Fshij Postin
-                                            </button>
-                                        </motion.section>))}
-                        </div>
+                </div>
+            )}
+            {/* Blogs SSR*/}
+            {loading ? (
+                <CircularProgress/>
+            ) : (
+                <div className="bg-gradient-to-b from-gray-100 to-gray-200 w-full py-16 px-4 sm:px-6 lg:px-16">
+                    <h1 className="text-5xl font-extrabold mb-12 text-purple-800 drop-shadow-sm text-center">
+                        Shfaqja e blogut në single page me (SSR)
+                    </h1>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+                        {posts &&
+                            posts.slice(0, 3)
+                                .map((post: Post) => (
+                                    <motion.section
+                                        key={post.id}
+                                        className="bg-white rounded-3xl shadow-lg p-8 flex flex-col justify-between hover:shadow-xl transition duration-300"
+                                        initial={{opacity: 0, y: 20}}
+                                        animate={{opacity: 1, y: 0}}
+                                        transition={{duration: 0.6}}>
+                                        <h2 className="text-2xl font-bold mb-2 text-purple-700 uppercase line-clamp-2">
+                                            {post.title}
+                                        </h2>
+                                        <p className="text-gray-700 mb-6 line-clamp-4">{post.body}</p>
+                                        <div className="flex flex-col sm:flex-row justify-end gap-4 mt-auto">
+                                            <Tooltip title="Post details">
+                                                <IconButton
+                                                    onClick={() => router.push("blogs/ssr/" + post.id)}
+                                                >
+                                                    <View className="text-gray-400"/>
+                                                </IconButton>
+                                            </Tooltip>
+                                            <Tooltip title="Delete post">
+                                                <IconButton
+                                                    onClick={() => handleDelete(post.id)}
+                                                >
+                                                    <Trash className="text-gray-400"/>
+                                                </IconButton>
+                                            </Tooltip>
+                                        </div>
+                                    </motion.section>))}
                     </div>
-                )}
-                {/* Blogs SSR*/}
-                {loading ? (
-                    <CircularProgress/>
-                ) : (
-                    <div className="bg-gray-200">
-                        <h1 className="text-4xl font-bold py-20 pb-6 text-black text-center">
-                            Shfaqja e blogut në single page me (SSR)
-                        </h1>
-                        <div className="grid grid-cols-3">
-                            {posts &&
-                                posts.slice(0, 3)
-                                    .map((post: Post) => (
-                                        <motion.section
-                                            key={post.id}
-                                            className="max-w-6xl py-20 px-6 text-center"
-                                            initial={{scale: 0.8}}
-                                            animate={{scale: 1}}
-                                            transition={{duration: 1}}>
-                                            <h2 className="text-4xl font-bold mb-6 text-yellow-600 line-clamp-2 uppercase">
-                                                {post.title}
-                                            </h2>
-                                            <p className="text-gray-700 mb-6">{post.body}</p>
-                                            <div className="mb-6">
-                                                <Link href={"/blogs/ssr/" + post.id}>
-                                                    <button
-                                                        className="px-6 py-2 bg-yellow-600 hover:bg-yellow-700 text-white rounded-xl transition">
-                                                        Shiko Detajet
-                                                    </button>
-                                                </Link>
-                                            </div>
-                                            <button onClick={() => handleDelete(post.id)}
-                                                    className="px-6 py-2 bg-red-600 hover:bg-red-700 text-white transition">
-                                                Fshij Postin
-                                            </button>
-                                        </motion.section>))}
-                        </div>
+                </div>
+            )}
+            {/* Blogs ISR*/}
+            {loading ? (
+                <CircularProgress/>
+            ) : (
+                <div className="bg-gradient-to-b from-gray-100 to-gray-200 w-full py-16 px-4 sm:px-6 lg:px-16">
+                    <h1 className="text-5xl font-extrabold mb-12 text-purple-800 drop-shadow-sm text-center">
+                        Shfaqja e blogut në single page me (ISR)
+                    </h1>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+                        {posts &&
+                            posts.slice(0, 3)
+                                .map((post: Post) => (
+                                    <motion.section
+                                        key={post.id}
+                                        className="bg-white rounded-3xl shadow-lg p-8 flex flex-col justify-between hover:shadow-xl transition duration-300"
+                                        initial={{opacity: 0, y: 20}}
+                                        animate={{opacity: 1, y: 0}}
+                                        transition={{duration: 0.6}}>
+                                        <h2 className="text-2xl font-bold mb-2 text-purple-700 uppercase line-clamp-2">
+                                            {post.title}
+                                        </h2>
+                                        <p className="text-gray-700 mb-6 line-clamp-4">{post.body}</p>
+                                        <div className="flex flex-col sm:flex-row justify-end gap-4 mt-auto">
+                                            <Tooltip title="Post details">
+                                                <IconButton
+                                                    onClick={() => router.push("blogs/isr/" + post.id)}
+                                                >
+                                                    <View className="text-gray-400"/>
+                                                </IconButton>
+                                            </Tooltip>
+                                            <Tooltip title="Delete post">
+                                                <IconButton
+                                                    onClick={() => handleDelete(post.id)}
+                                                >
+                                                    <Trash className="text-gray-400"/>
+                                                </IconButton>
+                                            </Tooltip>
+                                        </div>
+                                    </motion.section>))}
                     </div>
-                )}
-                {/* Blogs ISR*/}
-                {loading ? (
-                    <CircularProgress/>
-                ) : (
-                    <div className="bg-gray-200">
-                        <h1 className="text-4xl font-bold py-20 pb-6 text-black text-center">
-                            Shfaqja e blogut në single page me (ISR)
-                        </h1>
-                        <div className="grid grid-cols-3">
-                            {posts &&
-                                posts.slice(0, 3)
-                                    .map((post: Post) => (
-                                        <motion.section
-                                            key={post.id}
-                                            className="max-w-6xl py-20 px-6 text-center"
-                                            initial={{scale: 0.8}}
-                                            animate={{scale: 1}}
-                                            transition={{duration: 1}}>
-                                            <h2 className="text-4xl font-bold mb-6 text-yellow-600 line-clamp-2 uppercase">
-                                                {post.title}
-                                            </h2>
-                                            <p className="text-gray-700 mb-6">{post.body}</p>
-                                            <div className="mb-6">
-                                                <Link href={"/blogs/isr/" + post.id}>
-                                                    <button
-                                                        className="px-6 py-2 bg-yellow-600 hover:bg-yellow-700 text-white rounded-xl transition">
-                                                        Shiko Detajet
-                                                    </button>
-                                                </Link>
-                                            </div>
-                                            <button onClick={() => handleDelete(post.id)}
-                                                    className="px-6 py-2 bg-red-600 hover:bg-red-700 text-white transition">
-                                                Fshij Postin
-                                            </button>
-                                        </motion.section>))}
-                        </div>
-                    </div>
-                )}
-            </div>
+                </div>
+            )}
         </div>
     )
 }

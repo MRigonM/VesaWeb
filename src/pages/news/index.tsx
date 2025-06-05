@@ -3,14 +3,15 @@ import {useNewsContext} from "@/lib/contexts/NewsContext";
 import useFetch from "../../hooks/useFetch";
 import {News} from "@/api/models/News";
 import {useEffect} from "react";
-import {CircularProgress} from "@mui/material";
+import {CircularProgress, IconButton, Tooltip} from "@mui/material";
 import Link from "next/link";
 import {motion} from "framer-motion";
+import {Edit, Trash} from "lucide-react";
 
 export default function NewsPage() {
     const router = useRouter();
     const {news, setNews} = useNewsContext();
-    const {data : newsData, loading, remove} = useFetch<News[]>("/api/news");
+    const {data: newsData, loading, remove} = useFetch<News[]>("/api/news");
 
     useEffect(() => {
         if (newsData) {
@@ -34,63 +35,63 @@ export default function NewsPage() {
     }
 
     return (
-        <div className="pt-12">
-            <div className="flex flex-col items-center justify-center min-h-screen gap-y-20">
-                {/* Blogs nga DATABAZA*/}
-                {loading ? (
-                    <CircularProgress/>
-                ) : (
-                    <div className="bg-gray-200 w-full">
-                        <h1 className="text-4xl font-bold pt-20 pb-6 text-black text-center">
-                            Shfaqja e News nga databaza jonë
-                        </h1>
-                        <div className="grid grid-cols-3">
-                            {newsData && newsData.length > 0 ? (
-                                newsData.map((post: News) => (
-                                    <motion.section
-                                        key={post._id}
-                                        className="max-w-6xl py-20 px-6 text-center"
-                                        initial={{scale: 0.8}}
-                                        animate={{scale: 1}}
-                                        transition={{duration: 1}}>
-                                        <h2 className="text-4xl font-bold mb-6 text-yellow-600 line-clamp-2 uppercase">
-                                            {post.title}
-                                        </h2>
-                                        <p className="text-gray-700 mb-6">{post.body}</p>
-                                        <div className="mb-6">
-                                            <Link href={"/update/news/" + post._id}>
-                                                <button
-                                                    className="px-6 py-2 bg-yellow-600 hover:bg-yellow-700 text-white rounded-xl transition">
-                                                    Update
-                                                </button>
-                                            </Link>
-                                        </div>
-                                        <button
-                                            onClick={() => handleDeleteNews(post._id!)}
-                                            className="px-6 py-2 bg-red-600 hover:bg-red-700 text-white transition">
-                                            Delete News
-                                        </button>
-                                    </motion.section>
-                                ))
-                            ) : (
-                                <div className="col-span-3 py-20">
-                                    <p className="text-xl font-bold pb-10 text-black text-center">
-                                        Nuk ka News ne databaze
-                                    </p>
-                                </div>
-                            )}
-                        </div>
-                        <div className="text-center pb-10">
-                            <Link href={"/create/news"}>
-                                <button
-                                    className="px-6 py-2 bg-yellow-600 hover:bg-yellow-700 text-white rounded-xl transition">
-                                    Create news
-                                </button>
-                            </Link>
-                        </div>
+        <div className="pt-14 bg-gray-50 flex flex-col items-center min-h-screen gap-y-20">
+            {/* Blogs nga DATABAZA*/}
+            {loading ? (
+                <CircularProgress/>
+            ) : (
+                <div className="bg-gradient-to-b from-gray-100 to-gray-200 w-full py-16 px-4 sm:px-6 lg:px-16">
+                    <h1 className="text-5xl font-extrabold mb-12 pb-6 text-purple-800 drop-shadow-sm text-center">
+                        Shfaqja e News nga databaza jonë
+                    </h1>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+                        {newsData && newsData.length > 0 ? (
+                            newsData.map((post: News) => (
+                                <motion.section
+                                    key={post._id}
+                                    className="bg-white rounded-3xl shadow-lg p-8 flex flex-col justify-between hover:shadow-xl transition duration-300"
+                                    initial={{opacity: 0, y: 20}}
+                                    animate={{opacity: 1, y: 0}}
+                                    transition={{duration: 0.6}}
+                                >
+                                    <h2 className="text-2xl font-bold mb-4 text-purple-700 line-clamp-2 uppercase">
+                                        {post.title}
+                                    </h2>
+                                    <p className="text-gray-700 mb-6 line-clamp-4">{post.body}</p>
+                                    <div className="flex flex-col sm:flex-row justify-end gap-4 mt-auto">
+                                        <Tooltip title="Update news">
+                                            <IconButton
+                                                onClick={() => router.push("update/news/" + post._id)}
+                                            >
+                                                <Edit className="text-gray-400"/>
+                                            </IconButton>
+                                        </Tooltip>
+                                        <Tooltip title="Delete news">
+                                            <IconButton
+                                                onClick={() => handleDeleteNews(post._id!)}
+                                            >
+                                                <Trash className="text-gray-400"/>
+                                            </IconButton>
+                                        </Tooltip>
+                                    </div>
+                                </motion.section>
+                            ))
+                        ) : (
+                            <div className="py-20 text-xl font-medium text-gray-600 text-center">
+                                No news in the database
+                            </div>
+                        )}
                     </div>
-                )}
-            </div>
+                    <div className="text-center mt-16">
+                        <Link href={"/create/news"}>
+                            <button
+                                className="px-6 py-2 bg-purple-700 hover:bg-purple-800 text-white text-lg rounded-2xl transition">
+                                + Create News
+                            </button>
+                        </Link>
+                    </div>
+                </div>
+            )}
         </div>
     )
 
