@@ -10,7 +10,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({params}) => {
     console.log("params", params);
 
-    const res = await fetch(`https://jsonplaceholder.typicode.com/posts/${params?.id}`);
+    const res = await fetch(`https://json-placeholder.mock.beeceptor.com/posts/${params?.id}`);
     const post = await res.json();
     return {
         props: {post},

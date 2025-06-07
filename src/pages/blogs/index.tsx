@@ -5,7 +5,7 @@ import {motion} from "framer-motion";
 import Link from "next/link";
 import {Blog} from "@/api/models/Blog";
 import {useRouter} from "next/router";
-import {Edit, Trash, View, ViewIcon} from "lucide-react";
+import {Edit, Trash, View} from "lucide-react";
 
 export interface Post {
     id: string;
@@ -15,7 +15,7 @@ export interface Post {
 
 export default function Blogs() {
     const {data: initialPosts, loading} = useFetch<Post[]>(
-        "https://jsonplaceholder.typicode.com/posts?_limit=3"
+        "https://json-placeholder.mock.beeceptor.com/posts"
     );
 
     const [posts, setPosts] = useState<Post[] | null>();
@@ -60,7 +60,7 @@ export default function Blogs() {
             ) : (
                 <div className="bg-gradient-to-b from-gray-100 to-gray-200 w-full py-16 px-4 sm:px-6 lg:px-16">
                     <h1 className="text-5xl font-extrabold mb-12 pb-6 text-purple-800 drop-shadow-sm text-center">
-                        Shfaqja e Blogave nga databaza jonë
+                        Displaying Blogs from our database
                     </h1>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
                         {blogsData && blogsData.length > 0 ? (
@@ -96,7 +96,7 @@ export default function Blogs() {
                             ))
                         ) : (
                             <div className="py-20 text-xl font-medium text-gray-600 text-center">
-                                No blogs in the database
+                                No courses in the database
                             </div>
                         )}
                     </div>
@@ -104,7 +104,7 @@ export default function Blogs() {
                         <Link href={"/create/blog"}>
                             <button
                                 className="px-6 py-2 bg-purple-700 hover:bg-purple-800 text-white text-lg rounded-2xl transition">
-                                + Create Blog
+                                + Create Course
                             </button>
                         </Link>
                     </div>
@@ -117,7 +117,7 @@ export default function Blogs() {
             ) : (
                 <div className="bg-gradient-to-b from-gray-100 to-gray-200 w-full py-16 px-4 sm:px-6 lg:px-16">
                     <h1 className="text-5xl font-extrabold mb-12 text-purple-800 drop-shadow-sm text-center">
-                        Shfaqja e blogut në single page me Static dhe Server Side Generation (SSG)
+                        Single page blog display with Static and Server Side Generation (SSG)
                     </h1>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
                         {posts &&
@@ -135,14 +135,14 @@ export default function Blogs() {
                                         </h2>
                                         <p className="text-gray-700 mb-6 line-clamp-4">{post.body}</p>
                                         <div className="flex flex-col sm:flex-row justify-end gap-4 mt-auto">
-                                            <Tooltip title="Post details">
+                                            <Tooltip title="Course details">
                                                 <IconButton
                                                     onClick={() => router.push("blogs/ssg/" + post.id)}
                                                 >
                                                     <View className="text-gray-400"/>
                                                 </IconButton>
                                             </Tooltip>
-                                            <Tooltip title="Delete post">
+                                            <Tooltip title="Delete course">
                                                 <IconButton
                                                     onClick={() => handleDelete(post.id)}
                                                 >
@@ -160,7 +160,7 @@ export default function Blogs() {
             ) : (
                 <div className="bg-gradient-to-b from-gray-100 to-gray-200 w-full py-16 px-4 sm:px-6 lg:px-16">
                     <h1 className="text-5xl font-extrabold mb-12 text-purple-800 drop-shadow-sm text-center">
-                        Shfaqja e blogut në single page me (SSR)
+                       Blog display on single page with (SSR)
                     </h1>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
                         {posts &&
@@ -177,7 +177,7 @@ export default function Blogs() {
                                         </h2>
                                         <p className="text-gray-700 mb-6 line-clamp-4">{post.body}</p>
                                         <div className="flex flex-col sm:flex-row justify-end gap-4 mt-auto">
-                                            <Tooltip title="Post details">
+                                            <Tooltip title="Course details">
                                                 <IconButton
                                                     onClick={() => router.push("blogs/ssr/" + post.id)}
                                                 >
@@ -202,7 +202,7 @@ export default function Blogs() {
             ) : (
                 <div className="bg-gradient-to-b from-gray-100 to-gray-200 w-full py-16 px-4 sm:px-6 lg:px-16">
                     <h1 className="text-5xl font-extrabold mb-12 text-purple-800 drop-shadow-sm text-center">
-                        Shfaqja e blogut në single page me (ISR)
+                        Course display on single page with (ISR)
                     </h1>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
                         {posts &&
@@ -219,7 +219,7 @@ export default function Blogs() {
                                         </h2>
                                         <p className="text-gray-700 mb-6 line-clamp-4">{post.body}</p>
                                         <div className="flex flex-col sm:flex-row justify-end gap-4 mt-auto">
-                                            <Tooltip title="Post details">
+                                            <Tooltip title="Course details">
                                                 <IconButton
                                                     onClick={() => router.push("blogs/isr/" + post.id)}
                                                 >

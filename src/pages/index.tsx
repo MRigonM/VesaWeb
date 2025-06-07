@@ -17,7 +17,7 @@ export interface Post {
 
 export default function Home() {
     const {data: initialPosts, loading} = useFetch<Post[]>(
-        "https://jsonplaceholder.typicode.com/posts"
+        "https://json-placeholder.mock.beeceptor.com/posts"
     );
     const [posts, setPosts] = useState<Post[] | null>(null);
     useEffect(() => {
@@ -41,12 +41,12 @@ export default function Home() {
                 transition={{duration: 1}}
             >
                 <h1 className="text-5xl text-primary font-extrabold mb-4">
-                    Mirë se Vini në Aplikacionin Tonë!
+                    Welcome to our Programming Courses Application
                 </h1>
                 <p className="text-xl mb-6">
-                    Ndërtoni aplikacione të fuqishme dhe të shpejta me Next.js
+                    Learn how to code or build your skills in programming online to gain a better understanding of how websites and apps are designed and developed.
                 </p>
-                <Button text={"Meso me shume"}
+                <Button text={"Learn more"}
                         variant="secondary"
                         onClick={() => alert("Redirecting...")}/>
             </motion.section>
@@ -58,11 +58,16 @@ export default function Home() {
                 transition={{duration: 1}}
             >
                 <h2 className="text-4xl font-bold mb-6 text-purple-700">
-                    Rreth Nesh
+                    Learn anything
                 </h2>
                 <p className="text-gray-700 mb-6">
-                    Ne krijojme aplikacione te avancuara duke perdorur teknologjite me
-                    te fundit.Fokusi yne kryesir eshte te ofrojme produkte te optimizuara dhe SEO-fiendly.
+                    Whether you want to develop as a professional or discover a new hobby, there's an online course for
+                    that.
+                    You can even take your learning further with online microcredentials and degrees.
+                    Join millions of people from around the world learning together. Online learning is as easy and
+                    natural as chatting with a group of friends.
+                    Meet educators from top universities and cultural institutions, who'll share their experience
+                    through videos, quizzes and discussions.
                 </p>
                 <Image
                     src={CustomImage.src}
@@ -81,20 +86,20 @@ export default function Home() {
             >
                 <div className="contanier m-auto">
                     <h2 className="text-4xl font-bold mb-6 text-purple-600">
-                        Karakyeristikat Kryesore
+                        Main Features
                     </h2>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                         <Card icon={Rocket}
-                              title="Shpejtesi dhe Perfomanc"
-                              description="Aplikacion me i mire per motoret"
+                              title="Speed and Performance"
+                              description="Best app for engines"
                         />
                         <Card icon={BarChart}
-                              title="SEO e Avancuar"
-                              description="Rankim me i mire per motoret"
+                              title="Advanced SEO"
+                              description="Best ranking for engines"
                         />
                         <Card icon={ShieldCheck}
-                              title="Siguri maksimale"
-                              description="Mbrojtje e te dhenave dhe siguri"
+                              title="Maximum security"
+                              description="Data protection and security"
                         />
                     </div>
                 </div>
@@ -107,14 +112,13 @@ export default function Home() {
                 transition={{duration: 1}}
             >
                 <h2 className="text-4xl font-bold mb-6 text-purple-700">
-                    Sherbimet tona
+                    Our services
                 </h2>
                 <p className="text-gray-700 mb-6">
-                    Ofrojme nje game te gjere sherbimesh dduke perfshire zhvillimin
-                    e aplikacioneve web,optimizimin per SEO dhe integrimin
-                    me API te jashtem.
+                    We offer a wide range of services including web application development,
+                    SEO optimization, and integration with external APIs.
                 </p>
-                <Button text="Shikoni Sherbimet"
+                <Button text="View Services"
                         variant="secondary"
                         onClick={() => alert("Redirecting...")}
                 />
@@ -154,7 +158,7 @@ export default function Home() {
                 animate={{opacity: 1}}
                 transition={{duration: 1}}
             >
-                <h2 className="text-4xl font-bold mb-6"> Na Kontaktoni</h2>
+                <h2 className="text-4xl font-bold mb-6"> Contact us</h2>
                 <p className="mb-1"> Email contact@mycompany.com</p>
                 <p className="mb-1">TEL: +383 123 456 789</p>
                 <p className="mb-6">Adresa:Prishtine, Kosove</p>

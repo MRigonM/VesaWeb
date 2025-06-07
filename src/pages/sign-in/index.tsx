@@ -53,7 +53,7 @@ export default function SignIn({csrfToken } : { csrfToken : string } ) {
                         type="submit"
                         className="px-6 py-2 bg-green-600 text-white rounded-xl hover:bg-green-700 transition"
                         >
-                        Register
+                        Sign in
                     </button>
                     </form>
                 </div>

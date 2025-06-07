@@ -11,7 +11,7 @@ import { GetStaticPaths, GetServerSideProps } from "next";
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     console.log("params", params);
 
-    const res = await fetch(`https://jsonplaceholder.typicode.com/posts/${params?.id}`);
+    const res = await fetch(`https://json-placeholder.mock.beeceptor.com/posts/${params?.id}`);
     const post = await res.json();
     return {props: { post } };
 

@@ -41,7 +41,7 @@ export  default function UpdateNews(){
                     className="w-full px-4 py-2 mb-4 border rounded placeholder-gray-400 text-black"
                 />
                 <textarea
-                    placeholder="Permabajtja"
+                    placeholder="Content-"
                     value={newNews.body}
                     onChange={(e) => setNewNews({ ...newNews, body: e.target.value })}
                     className="w-full px-4 py-2 mb-4 border rounded placeholder-gray-400 text-black"

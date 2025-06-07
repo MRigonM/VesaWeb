@@ -1,6 +1,5 @@
 import {motion} from "framer-motion";
 import {useState} from "react";
-import Button from "@/components/shared/Button";
 
 export default function Contact() {
     const [formData, setFormData] = useState({
@@ -29,9 +28,8 @@ export default function Contact() {
                 animate={{opacity: 1}}
                 transition={{duration: 1}}
             >
-                <h2 className="text-5xl font-extrabold mb-4 tracking-wide"> Na Kontaktoni</h2>
-                <p className="text-xl max-w-3xl mx-auto leading-relaxed">Jemi te gatshem te ju ndihmojme! Plotesoni
-                    formularin me poshte per te na kontaktuar</p>
+                <h2 className="text-5xl font-extrabold mb-4 tracking-wide">Contact Us</h2>
+                <p className="text-xl max-w-3xl mx-auto leading-relaxed">We are ready to help you! Fill out the form below to contact us.</p>
             </motion.section>
             {/* Form Submission Section */}
             <motion.section
@@ -42,18 +40,18 @@ export default function Contact() {
             >
                 <div className="bg-white p-8 rounded-xl shadow-md">
                     <h2 className="text-3xl font-bold text-purple-400 mb-6 text-center">
-                        Formulari i Kontaktit
+                        Contact Form
                     </h2>
                     <form onSubmit={handleSubmit}>
                         <div className="mb-4 text-left">
-                            <label className="block font-medium mb-1 text-[#333]">Emri juaj</label>
+                            <label className="block font-medium mb-1 text-[#333]">Your name</label>
                             <input
                                 type="text"
                                 name="name"
                                 value={formData.name}
                                 onChange={handleChange}
-                                className="w-full px-4 py-2 border rounded-lg"
-                                placeholder="Shkruani emrin tuaj"
+                                className="w-full px-4 py-2 border rounded-lg text-[#333]"
+                                placeholder="Write your name"
                             />
                         </div>
                         <div className="mb-4 text-left">
@@ -63,18 +61,18 @@ export default function Contact() {
                                 name="email"
                                 value={formData.email}
                                 onChange={handleChange}
-                                className="w-full px-4 py-2 border rounded-lg"
-                                placeholder="Shkruani email-in tuaj"
+                                className="w-full px-4 py-2 border rounded-lg text-[#333]"
+                                placeholder="Enter your email"
                             />
                         </div>
                         <div className="mb-4 text-left">
-                            <label className="block font-medium mb-1 text-[#333]">Mesazhi</label>
+                            <label className="block font-medium mb-1 text-[#333]">Message</label>
                             <textarea
                                 name="message"
                                 value={formData.message}
                                 onChange={handleChange}
-                                className="w-full px-4 py-2 border rounded-lg"
-                                placeholder="Shkruani mesazhin tuaj"
+                                className="w-full px-4 py-2 border rounded-lg text-[#333]"
+                                placeholder="Enter your message"
                             ></textarea>
                         </div>
                         <div className="text-center">
@@ -84,7 +82,7 @@ export default function Contact() {
                                 type="submit"
                                 className="mt-4 px-6 py-3 bg-purple-700 text-white rounded-xl"
                             >
-                                Dërgo Mesazhin
+                                Send Message
                             </motion.button>
                         </div>
                     </form>
@@ -98,10 +96,10 @@ export default function Contact() {
                 animate={{opacity: 1}}
                 transition={{duration: 1}}
             >
-                <h2 className="text-4xl font-bold mb-6"> Na Kontaktoni</h2>
+                <h2 className="text-4xl font-bold mb-6">Contact us</h2>
                 <p className="mb-1"> Email contact@mycompany.com</p>
                 <p className="mb-1">TEL: +383 123 456 789</p>
-                <p>Adresa:Prishtine, Kosove</p>
+                <p>Adress:Prishtine, Kosove</p>
 
             </motion.section>
         </div>

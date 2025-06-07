@@ -1,20 +1,21 @@
-﻿import clientPromise from "@/lib/mongodb";
+﻿import NextAuth, {AuthOptions} from "next-auth";
+import {JWT} from "next-auth/jwt";
+import {Session} from "next-auth";
+import clientPromise from "@/lib/mongodb";
 import {getUser} from "@/api/services/User";
-import { MongoDBAdapter } from "@auth/mongodb-adapter";
+import {MongoDBAdapter} from "@auth/mongodb-adapter";
 import CredentialsProvider from "next-auth/providers/credentials";
 import {compare} from "bcryptjs";
 import * as process from "node:process";
-import NextAuth from "next-auth";
 
-
-const authOptions = {
-    adapter : MongoDBAdapter(clientPromise),
+export const authOptions: AuthOptions = {
+    adapter: MongoDBAdapter(clientPromise),
     providers: [
         CredentialsProvider({
             name: "credentials",
             credentials: {
-                email: { label: "Email" , type: "email" },
-                password: { label: "Password", type: "password" },
+                email: {label: "Email", type: "email"},
+                password: {label: "Password", type: "password"},
             },
             async authorize(credentials) {
                 const user = await getUser(credentials?.email!);
@@ -26,6 +27,8 @@ const authOptions = {
                 return {
                     id: user._id.toString(),
                     email: user.email,
+                    name: user.name,
+                    role: user.role,
                     emailVerified: user.emailVerified ?? null,
                 };
             }
@@ -35,9 +38,25 @@ const authOptions = {
         signIn: "/sign-in",
     },
     session: {
-        strategy: "jwt" as "jwt",
+        strategy: "jwt",
+    },
+    callbacks: {
+        async jwt({token, user}: { token: JWT; user?: any }) {
+            if (user) {
+                token.name = user.name;
+                token.role = user.role;
+            }
+            return token;
+        },
+        async session({session, token}: { session: Session; token: JWT }) {
+            if (session.user && token.name) {
+                session.user.name = token.name as string;
+                (session.user as any).role = token.role;
+            }
+            return session;
+        },
     },
     secret: process.env.NEXTAUTH_SECRET,
-}
+};
 
 export default NextAuth(authOptions);

@@ -19,7 +19,7 @@ export  default function CreateBlog(){
         <div className="flex flex-col items-center justify-center min-h-screen gap-y-20">
             <div className="mb-10 max-w-2xl mx-auto bg-white p-6 rounded-xl shadow-md">
                 <h2 className="text-black text-2xl font-semibold mb-4">
-                    Create Blog
+                    Create Course
                 </h2>
                 <input
                     type="text"
@@ -29,7 +29,7 @@ export  default function CreateBlog(){
                     className="w-full px-4 py-2 mb-4 border rounded placeholder-gray-400 text-black"
                 />
                 <textarea
-                    placeholder="Permabajtja"
+                    placeholder="Content"
                     value={newBlog.body}
                     onChange={(e) => setNewBlog({ ...newBlog, body: e.target.value })}
                     className="w-full px-4 py-2 mb-4 border rounded placeholder-gray-400 text-black"
