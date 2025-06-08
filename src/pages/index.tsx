@@ -8,6 +8,7 @@ import useFetch from "../hooks/useFetch";
 import {useEffect, useState} from "react";
 import {CircularProgress, IconButton, Tooltip} from "@mui/material";
 import {useSession} from "next-auth/react";
+import {router} from "next/client";
 
 
 export interface Post {
@@ -51,7 +52,7 @@ export default function Home() {
                 </p>
                 <Button text={"Learn more"}
                         variant="secondary"
-                        onClick={() => alert("Redirecting...")}/>
+                        onClick={() => router.push("/about")}/>
             </motion.section>
             {/* About Section*/}
             <motion.section
@@ -121,9 +122,9 @@ export default function Home() {
                     We offer a wide range of services including web application development,
                     SEO optimization, and integration with external APIs.
                 </p>
-                <Button text="View Services"
+                <Button text="View Courses"
                         variant="secondary"
-                        onClick={() => alert("Redirecting...")}
+                        onClick={() => router.push("/blogs")}
                 />
             </motion.section>
             {/* Blog Section */}
@@ -132,7 +133,7 @@ export default function Home() {
                     <CircularProgress/>
                 ) : (
                     <>
-                        {posts && posts?.map((post) => (
+                        {posts && posts.slice(0, 9)?.map((post) => (
                             <motion.section
                                 key={post.id}
                                 className="bg-white p-6 rounded-lg shadow-md text-left flex-col"
@@ -169,9 +170,9 @@ export default function Home() {
                 <p className="mb-1"> Email contact@mycompany.com</p>
                 <p className="mb-1">TEL: +383 123 456 789</p>
                 <p className="mb-6">Adresa:Prishtine, Kosove</p>
-                <Button text="Na kontaktoni"
+                <Button text="Contact us"
                         variant={"secondary"}
-                        onClick={() => alert("Opening Contact Form...")}
+                        onClick={() => router.push("/contact")}
                 />
             </motion.section>
         </div>

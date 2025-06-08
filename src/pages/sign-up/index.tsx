@@ -2,6 +2,7 @@
 import React, {useState} from "react";
 import useFetch from "../../hooks/useFetch";
 import {User} from "@/api/models/User";
+import {signIn} from "next-auth/react";
 
 export default function SignUp() {
 
@@ -55,9 +56,25 @@ export default function SignUp() {
                     />
                     <button
                         onClick={handleSubmit}
-                        className="px-6 py-2 bg-green-600 text-white rounded-xl hover:bg-green-700 transition"
+                        className="w-full mt-2 px-6 py-2 bg-green-600 text-white rounded-xl hover:bg-green-700 transition"
                         >
-                        Register
+                        Sign up with email
+                    </button>
+                    <div className="flex items-center my-4">
+                        <hr className="flex-grow border-gray-300" />
+                        <span className="mx-2 text-gray-500">or</span>
+                        <hr className="flex-grow border-gray-300" />
+                    </div>
+
+                    <button
+                        onClick={() =>
+                            signIn("google", {
+                                callbackUrl: "/",
+                            })
+                        }
+                        className="w-full px-6 py-2 bg-red-600 text-white rounded-xl hover:bg-red-700 transition"
+                    >
+                        Sign in with Google
                     </button>
                 </div>
             </div>

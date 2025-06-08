@@ -7,6 +7,7 @@ import { MongoDBAdapter } from "@auth/mongodb-adapter";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { compare } from "bcryptjs";
 import * as process from "node:process";
+import GoogleProvider from "next-auth/providers/google";
 
 export const authOptions: AuthOptions = {
     adapter: MongoDBAdapter(clientPromise),
@@ -32,6 +33,10 @@ export const authOptions: AuthOptions = {
                     emailVerified: user.emailVerified ?? null,
                 };
             },
+        }),
+        GoogleProvider({
+            clientId: process.env.GOOGLE_CLIENT_ID!,
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
         }),
     ],
     pages: {

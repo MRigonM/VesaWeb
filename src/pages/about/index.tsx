@@ -2,6 +2,7 @@
 import Image from "next/image"
 import CustomImage from "@/assets/images/image.jpg"
 import Button from "@/components/shared/Button";
+import {router} from "next/client";
 
 
 export default function About() {
@@ -99,9 +100,9 @@ export default function About() {
                 <p className="mb-1"> Email contact@mycompany.com</p>
                 <p className="mb-1">TEL: +383 123 456 789</p>
                 <p className="mb-6">Adresa:Prishtine, Kosove</p>
-                <Button text="Na kontaktoni"
+                <Button text="Contact us"
                         variant={"secondary"}
-                        onClick={() => alert("Opening Contact Form...")}
+                        onClick={() => router.push("/contact")}
                 />
             </motion.section>
         </div>
