@@ -74,6 +74,12 @@ export function Header() {
                   </button>
                       )}
                   <button
+                    onClick={() => router.push("/favorites")}
+                    className="w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 rounded-b-xl transition"
+                    >
+                    Favorites
+                  </button>
+                  <button
                     onClick={() => signOut({ callbackUrl: "/sign-in" })}
                     className="w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 rounded-b-xl transition"
                   >
