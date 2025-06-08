@@ -20,7 +20,7 @@ export function Header() {
     { name: "Contact Us", pathName: "/contact" },
     {name: "Courses", pathName: "/blogs"},
     {name: "News", pathName: "/news"},
-    // ✅ Only show News if admin
+    // Only show Dashboard if admin
     ...(isAdmin ? [{ name: "Dashboard", pathName: "/admin/dashboard" }] : []),
   ];
 

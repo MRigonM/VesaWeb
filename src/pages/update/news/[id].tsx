@@ -40,7 +40,7 @@ export  default function UpdateNews(){
     const handleUpdate = async () => {
         if(!newNews.title || !newNews.body || !id) return;
         await put(newNews);
-        router.push("/news");
+        router.push("/admin/dashboard");
     }
 
     if(loading) return <p className="text-center mt-10">Loading...</p>

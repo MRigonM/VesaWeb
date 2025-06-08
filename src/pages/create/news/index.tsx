@@ -31,7 +31,7 @@ export  default function CreateNews(){
         if (!newNews.title || !newNews.body) return;
         await post(newNews);
         setNewNews({title :"", body:""});
-        router.push("/news");
+        router.push("/admin/dashboard");
     };
     return(
     <div className="pt-12">

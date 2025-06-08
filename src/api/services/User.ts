@@ -24,6 +24,19 @@ export async function getUser(email: string) {
     );
     return result;
 }
+
+export async function getAllUsers() {
+    const client = await clientPromise;
+    const db = client.db(DB_NAME);
+
+    const users = await db
+        .collection(COLLECTION_NAME)
+        .find({}, { projection: { password: 0 } }) // do NOT expose password
+        .toArray();
+
+    return users;
+}
+
 export async function ensureAdminUser() {
     const ADMIN_EMAIL = "admin@example.com";
     const ADMIN_PASSWORD = "admin123";
