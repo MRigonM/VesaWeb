@@ -56,7 +56,7 @@ export  default function CreateNews(){
                     onClick={handleCreate}
                     className="w-full bg-purple-700 hover:bg-purple-800 text-white py-3 rounded-xl text-lg font-semibold transition"
                 >
-                    Create Blog
+                    Create News
                 </button>
             </div>
         </div>

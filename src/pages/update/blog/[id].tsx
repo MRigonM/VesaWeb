@@ -73,7 +73,7 @@ export default function UpdateBlog() {
                     onClick={handleUpdate}
                     className="w-full bg-purple-700 hover:bg-purple-800 text-white py-3 rounded-xl text-lg font-semibold transition"
                 >
-                    Update Blog
+                    Update Course
                 </button>
             </div>
         </div>

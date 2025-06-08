@@ -21,7 +21,7 @@ export default function Blog({post}: any) {
     return (
         <div className="min-h-screen flex flex-col justify-center items-center bg-gray-50 px-6">
       <h2 className="text-3xl sm:text-4xl font-extrabold text-purple-800 mb-10 text-center">
-        Static Site Generated Blog
+        Static Site Generated Course
       </h2>
       <div className="w-full max-w-3xl bg-white shadow-2xl rounded-3xl p-10 sm:p-14 text-center">
         <h1 className="text-2xl sm:text-3xl font-semibold text-gray-900 uppercase mb-4 line-clamp-2">

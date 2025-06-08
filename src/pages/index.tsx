@@ -138,7 +138,7 @@ export default function Home() {
                 />
             </motion.section>
 
-            {/* Blog Section */}
+            {/* Course Section */}
             <section className="max-w-6xl mx-auto py-20 px-6 bg-gradient-to-r from-purple-100 to-purple-50 rounded-xl">
                 <h2 className="text-4xl font-bold mb-8 text-purple-700 text-center">
                     Latest Courses

@@ -50,7 +50,7 @@ export default function Blogs() {
 
     try {
       await remove(`/api/blogs/${id}`);
-      alert("Blog u fshi me sukses!");
+      alert("Course u fshi me sukses!");
       router.reload();
     } catch (error) {
       alert("Gabim gjate fshirjes se blogut");
@@ -159,7 +159,7 @@ export default function Blogs() {
         <div className="bg-gradient-to-b from-gray-100 to-gray-200 w-full py-16 px-4 sm:px-6 lg:px-16">
           <div className="max-w-screen-xl mx-auto">
             <h1 className="text-5xl font-extrabold mb-12 text-purple-800 drop-shadow-sm text-center">
-              Single Page Blog Display (SSG)
+              Single Page Course Display (SSG)
             </h1>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
               {renderPosts(posts, "ssg")}
@@ -173,7 +173,7 @@ export default function Blogs() {
         <div className="bg-gradient-to-b from-gray-100 to-gray-200 w-full py-16 px-4 sm:px-6 lg:px-16">
           <div className="max-w-screen-xl mx-auto">
             <h1 className="text-5xl font-extrabold mb-12 text-purple-800 drop-shadow-sm text-center">
-              Blog Display (SSR)
+              Course Display (SSR)
             </h1>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
               {renderPosts(posts, "ssr")}
