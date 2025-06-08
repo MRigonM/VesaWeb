@@ -6,6 +6,7 @@ import Link from "next/link";
 import {Blog} from "@/api/models/Blog";
 import {useRouter} from "next/router";
 import {Edit, Trash, View} from "lucide-react";
+import {useSession} from "next-auth/react";
 
 export interface Post {
     id: string;
@@ -14,6 +15,9 @@ export interface Post {
 }
 
 export default function Blogs() {
+    const {data: session} = useSession();
+    const role = (session?.user as any)?.role;
+
     const {data: initialPosts, loading} = useFetch<Post[]>(
         "https://json-placeholder.mock.beeceptor.com/posts"
     );
@@ -76,22 +80,26 @@ export default function Blogs() {
                                         {post.title}
                                     </h2>
                                     <p className="text-gray-700 mb-6 line-clamp-4">{post.body}</p>
-                                    <div className="flex flex-col sm:flex-row justify-end gap-4 mt-auto">
-                                        <Tooltip title="Update post">
-                                            <IconButton
-                                                onClick={() => router.push("update/blog/" + post._id)}
-                                            >
-                                                <Edit className="text-gray-400"/>
-                                            </IconButton>
-                                        </Tooltip>
-                                        <Tooltip title="Delete post">
-                                            <IconButton
-                                                onClick={() => handleDeleteBlog(post._id!)}
-                                            >
-                                                <Trash className="text-gray-400"/>
-                                            </IconButton>
-                                        </Tooltip>
-                                    </div>
+                                    {role === "admin" && (
+                                        <>
+                                            <div className="flex flex-col sm:flex-row justify-end gap-4 mt-auto">
+                                                <Tooltip title="Update post">
+                                                    <IconButton
+                                                        onClick={() => router.push("update/blog/" + post._id)}
+                                                    >
+                                                        <Edit className="text-gray-400"/>
+                                                    </IconButton>
+                                                </Tooltip>
+                                                <Tooltip title="Delete post">
+                                                    <IconButton
+                                                        onClick={() => handleDeleteBlog(post._id!)}
+                                                    >
+                                                        <Trash className="text-gray-400"/>
+                                                    </IconButton>
+                                                </Tooltip>
+                                            </div>
+                                        </>
+                                    )}
                                 </motion.section>
                             ))
                         ) : (
@@ -100,14 +108,18 @@ export default function Blogs() {
                             </div>
                         )}
                     </div>
-                    <div className="text-center mt-16">
-                        <Link href={"/create/blog"}>
-                            <button
-                                className="px-6 py-2 bg-purple-700 hover:bg-purple-800 text-white text-lg rounded-2xl transition">
-                                + Create Course
-                            </button>
-                        </Link>
-                    </div>
+                    {role === "admin" && (
+                        <>
+                            <div className="text-center mt-16">
+                                <Link href={"/create/blog"}>
+                                    <button
+                                        className="px-6 py-2 bg-purple-700 hover:bg-purple-800 text-white text-lg rounded-2xl transition">
+                                        + Create Course
+                                    </button>
+                                </Link>
+                            </div>
+                        </>
+                    )}
                 </div>
             )}
 
@@ -142,13 +154,17 @@ export default function Blogs() {
                                                     <View className="text-gray-400"/>
                                                 </IconButton>
                                             </Tooltip>
-                                            <Tooltip title="Delete course">
-                                                <IconButton
-                                                    onClick={() => handleDelete(post.id)}
-                                                >
-                                                    <Trash className="text-gray-400"/>
-                                                </IconButton>
-                                            </Tooltip>
+                                            {role === "admin" && (
+                                                <>
+                                                    <Tooltip title="Delete course">
+                                                        <IconButton
+                                                            onClick={() => handleDelete(post.id)}
+                                                        >
+                                                            <Trash className="text-gray-400"/>
+                                                        </IconButton>
+                                                    </Tooltip>
+                                                </>
+                                            )}
                                         </div>
                                     </motion.section>))}
                     </div>
@@ -160,7 +176,7 @@ export default function Blogs() {
             ) : (
                 <div className="bg-gradient-to-b from-gray-100 to-gray-200 w-full py-16 px-4 sm:px-6 lg:px-16">
                     <h1 className="text-5xl font-extrabold mb-12 text-purple-800 drop-shadow-sm text-center">
-                       Blog display on single page with (SSR)
+                        Blog display on single page with (SSR)
                     </h1>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
                         {posts &&
@@ -184,13 +200,17 @@ export default function Blogs() {
                                                     <View className="text-gray-400"/>
                                                 </IconButton>
                                             </Tooltip>
-                                            <Tooltip title="Delete post">
-                                                <IconButton
-                                                    onClick={() => handleDelete(post.id)}
-                                                >
-                                                    <Trash className="text-gray-400"/>
-                                                </IconButton>
-                                            </Tooltip>
+                                            {role === "admin" && (
+                                                <>
+                                                    <Tooltip title="Delete course">
+                                                        <IconButton
+                                                            onClick={() => handleDelete(post.id)}
+                                                        >
+                                                            <Trash className="text-gray-400"/>
+                                                        </IconButton>
+                                                    </Tooltip>
+                                                </>
+                                            )}
                                         </div>
                                     </motion.section>))}
                     </div>
@@ -226,13 +246,17 @@ export default function Blogs() {
                                                     <View className="text-gray-400"/>
                                                 </IconButton>
                                             </Tooltip>
-                                            <Tooltip title="Delete post">
-                                                <IconButton
-                                                    onClick={() => handleDelete(post.id)}
-                                                >
-                                                    <Trash className="text-gray-400"/>
-                                                </IconButton>
-                                            </Tooltip>
+                                            {role === "admin" && (
+                                                <>
+                                                    <Tooltip title="Delete course">
+                                                        <IconButton
+                                                            onClick={() => handleDelete(post.id)}
+                                                        >
+                                                            <Trash className="text-gray-400"/>
+                                                        </IconButton>
+                                                    </Tooltip>
+                                                </>
+                                            )}
                                         </div>
                                     </motion.section>))}
                     </div>

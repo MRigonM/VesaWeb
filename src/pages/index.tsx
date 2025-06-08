@@ -7,6 +7,7 @@ import {Rocket, BarChart, ShieldCheck, Trash} from "lucide-react";
 import useFetch from "../hooks/useFetch";
 import {useEffect, useState} from "react";
 import {CircularProgress, IconButton, Tooltip} from "@mui/material";
+import {useSession} from "next-auth/react";
 
 
 export interface Post {
@@ -16,6 +17,8 @@ export interface Post {
 }
 
 export default function Home() {
+    const {data: session} = useSession();
+    const role = (session?.user as any)?.role;
     const {data: initialPosts, loading} = useFetch<Post[]>(
         "https://json-placeholder.mock.beeceptor.com/posts"
     );
@@ -141,11 +144,15 @@ export default function Home() {
                                     {post.title}
                                 </h3>
                                 <p className="text-gray-600 mb-4 flex-1">{post.body}</p>
-                                <Tooltip title="Delete Post">
-                                  <IconButton onClick={() => handleDelete(post.id)}>
-                                    <Trash className="text-gray-400"/>
-                                  </IconButton>
-                                </Tooltip>
+                                {role === "admin" && (
+                                    <>
+                                        <Tooltip title="Delete Post">
+                                            <IconButton onClick={() => handleDelete(post.id)}>
+                                                <Trash className="text-gray-400"/>
+                                            </IconButton>
+                                        </Tooltip>
+                                    </>
+                                )}
                             </motion.section>
                         ))}
                     </>

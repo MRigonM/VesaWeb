@@ -2,6 +2,25 @@
 import useFetch from "../../../hooks/useFetch";
 import {News} from "@/api/models/News";
 import {useRouter} from "next/router";
+import {getServerSession} from "next-auth";
+import {authOptions} from "../../api/auth/[...nextauth]";
+
+export async function getServerSideProps(context: any) {
+    const session = await getServerSession(context.req, context.res, authOptions);
+
+    if (!session || (session.user as any).role !== "admin") {
+        return {
+            redirect: {
+                destination: "/sign-in",
+                permanent: false,
+            },
+        };
+    }
+
+    return {
+        props: { session },
+    };
+}
 
 export  default function UpdateNews(){
     const router = useRouter();

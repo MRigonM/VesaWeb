@@ -7,8 +7,11 @@ import {CircularProgress, IconButton, Tooltip} from "@mui/material";
 import Link from "next/link";
 import {motion} from "framer-motion";
 import {Edit, Trash} from "lucide-react";
+import {useSession} from "next-auth/react";
 
 export default function NewsPage() {
+    const {data: session} = useSession();
+    const role = (session?.user as any)?.role;
     const router = useRouter();
     const {news, setNews} = useNewsContext();
     const {data: newsData, loading, remove} = useFetch<News[]>("/api/news");
@@ -58,22 +61,26 @@ export default function NewsPage() {
                                         {post.title}
                                     </h2>
                                     <p className="text-gray-700 mb-6 line-clamp-4">{post.body}</p>
-                                    <div className="flex flex-col sm:flex-row justify-end gap-4 mt-auto">
-                                        <Tooltip title="Update news">
-                                            <IconButton
-                                                onClick={() => router.push("update/news/" + post._id)}
-                                            >
-                                                <Edit className="text-gray-400"/>
-                                            </IconButton>
-                                        </Tooltip>
-                                        <Tooltip title="Delete news">
-                                            <IconButton
-                                                onClick={() => handleDeleteNews(post._id!)}
-                                            >
-                                                <Trash className="text-gray-400"/>
-                                            </IconButton>
-                                        </Tooltip>
-                                    </div>
+                                    {role === "admin" && (
+                                        <>
+                                            <div className="flex flex-col sm:flex-row justify-end gap-4 mt-auto">
+                                                <Tooltip title="Update news">
+                                                    <IconButton
+                                                        onClick={() => router.push("update/news/" + post._id)}
+                                                    >
+                                                        <Edit className="text-gray-400"/>
+                                                    </IconButton>
+                                                </Tooltip>
+                                                <Tooltip title="Delete news">
+                                                    <IconButton
+                                                        onClick={() => handleDeleteNews(post._id!)}
+                                                    >
+                                                        <Trash className="text-gray-400"/>
+                                                    </IconButton>
+                                                </Tooltip>
+                                            </div>
+                                        </>
+                                    )}
                                 </motion.section>
                             ))
                         ) : (
@@ -82,14 +89,18 @@ export default function NewsPage() {
                             </div>
                         )}
                     </div>
-                    <div className="text-center mt-16">
-                        <Link href={"/create/news"}>
-                            <button
-                                className="px-6 py-2 bg-purple-700 hover:bg-purple-800 text-white text-lg rounded-2xl transition">
-                                + Create News
-                            </button>
-                        </Link>
-                    </div>
+                    {role === "admin" && (
+                        <>
+                            <div className="text-center mt-16">
+                                <Link href={"/create/news"}>
+                                    <button
+                                        className="px-6 py-2 bg-purple-700 hover:bg-purple-800 text-white text-lg rounded-2xl transition">
+                                        + Create News
+                                    </button>
+                                </Link>
+                            </div>
+                        </>
+                    )}
                 </div>
             )}
         </div>

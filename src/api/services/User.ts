@@ -24,10 +24,9 @@ export async function getUser(email: string) {
     );
     return result;
 }
-// Function to create admin user if not exists
 export async function ensureAdminUser() {
     const ADMIN_EMAIL = "admin@example.com";
-    const ADMIN_PASSWORD = "admin123"; // Change to a strong password
+    const ADMIN_PASSWORD = "admin123";
     const ADMIN_NAME = "Admin User";
 
     const client = await clientPromise;
@@ -51,7 +50,6 @@ export async function ensureAdminUser() {
     }
 }
 
-// Call this function when the server starts
 ensureAdminUser().catch(err => {
     console.error("Failed to ensure admin user:", err);
 });

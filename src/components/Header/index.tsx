@@ -12,7 +12,7 @@ export function Header() {
   const router = useRouter();
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
-  const isAdmin = (session?.user as any)?.role === "admin"; // ✅ Check role
+  const isAdmin = (session?.user as any)?.role === "admin";
 
   const items = [
     { name: "Home", pathName: "/" },
