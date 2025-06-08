@@ -27,21 +27,28 @@ Ky projekt është ndërtuar me **Next.js** dhe **TypeScript**. Ndiqni këto hap
 1. **Klono projektin**
    ```bash
    git clone https://github.com/username/vesa-web.git
+   
    cd vesa-web
 
-2.**Instalo varësitë**
- ```bash
-npm install
+2.Instalo varësitë
+```
+   npm install
 
+```
+3.**Instalo NextAuth.js**
+```
+npm install next-auth
+```
 3.**Krijo një skedar .env.local dhe vendos variablat e nevojshme të mjedisit**
+ ```bash
+      GOOGLE_CLIENT_ID=your_google_client_id
+      GOOGLE_CLIENT_SECRET=your_google_client_secret
+      NEXTAUTH_URL=http://localhost:3000
+      NEXTAUTH_SECRET=your_nextauth_secret
 
-GOOGLE_CLIENT_ID=your_google_client_id
-GOOGLE_CLIENT_SECRET=your_google_client_secret
-NEXTAUTH_URL=http://localhost:3000
-NEXTAUTH_SECRET=your_nextauth_secret
-
-4.Starto aplikacionin në zhvillim
-```bash
+```
+4.**Starto aplikacionin në zhvillim**
+```
 npm run dev
 
 
