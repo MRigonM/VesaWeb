@@ -1,11 +1,11 @@
-﻿import NextAuth, {AuthOptions} from "next-auth";
-import {JWT} from "next-auth/jwt";
-import {Session} from "next-auth";
+﻿import NextAuth, { AuthOptions } from "next-auth";
+import { JWT } from "next-auth/jwt";
+import { Session } from "next-auth";
 import clientPromise from "@/lib/mongodb";
-import {getUser} from "@/api/services/User";
-import {MongoDBAdapter} from "@auth/mongodb-adapter";
+import { getUser } from "@/api/services/User";
+import { MongoDBAdapter } from "@auth/mongodb-adapter";
 import CredentialsProvider from "next-auth/providers/credentials";
-import {compare} from "bcryptjs";
+import { compare } from "bcryptjs";
 import * as process from "node:process";
 
 export const authOptions: AuthOptions = {
@@ -14,8 +14,8 @@ export const authOptions: AuthOptions = {
         CredentialsProvider({
             name: "credentials",
             credentials: {
-                email: {label: "Email", type: "email"},
-                password: {label: "Password", type: "password"},
+                email: { label: "Email", type: "email" },
+                password: { label: "Password", type: "password" },
             },
             async authorize(credentials) {
                 const user = await getUser(credentials?.email!);
@@ -31,8 +31,8 @@ export const authOptions: AuthOptions = {
                     role: user.role,
                     emailVerified: user.emailVerified ?? null,
                 };
-            }
-        })
+            },
+        }),
     ],
     pages: {
         signIn: "/sign-in",
@@ -41,16 +41,18 @@ export const authOptions: AuthOptions = {
         strategy: "jwt",
     },
     callbacks: {
-        async jwt({token, user}: { token: JWT; user?: any }) {
+        async jwt({ token, user }: { token: JWT; user?: any }) {
             if (user) {
                 token.name = user.name;
-                token.role = user.role;
+                token.email = user.email;
+                token.role = user.role || "user";
             }
             return token;
         },
-        async session({session, token}: { session: Session; token: JWT }) {
-            if (session.user && token.name) {
+        async session({ session, token }: { session: Session; token: JWT }) {
+            if (session.user) {
                 session.user.name = token.name as string;
+                session.user.email = token.email as string;
                 (session.user as any).role = token.role;
             }
             return session;
