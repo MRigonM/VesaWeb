@@ -1,83 +1,103 @@
-﻿import {useRouter} from "next/router";
-import React, {useState} from "react";
+﻿import { useRouter } from "next/router";
+import React, { useState } from "react";
 import useFetch from "../../hooks/useFetch";
-import {User} from "@/api/models/User";
-import {signIn} from "next-auth/react";
+import { User } from "@/api/models/User";
+import { signIn } from "next-auth/react";
+import Link from "next/link";
 
 export default function SignUp() {
-
     const router = useRouter();
-    const [user, setUser] = React.useState({name: '', email: '', password: ''});
+    const [user, setUser] = useState({ name: "", email: "", password: "" });
     const [error, setError] = useState("");
 
     const { post } = useFetch<User[]>("/api/auth/register");
 
     const handleSubmit = async () => {
+        setError("");
         const res = await post(user);
 
-        if(res?.error) {
+        if (res?.error) {
             setError(res.error);
         } else {
             router.push("/sign-in");
         }
     };
+
     return (
-        <div className="pt-12">
-            <div className="flex flex-col items-center justify-center min-h-screen gap-y-20">
-                <div className="mb-10 max-w-2xl mx-auto bg-white p-6 rounded-xl shadow-md">
-                    <h2 className="text-black text-2xl font-semibold mb-4">
-                        Sign Up
-                    </h2>
-                    {error && (
-                        <div className="bg-red-100 text-red-700 p-2 mb-4 rounded">
-                            {error}
-                        </div>
-                    )}
-                    <input
+        <div className="pt-12 bg-gradient-to-r from-purple-100 to-blue-100 min-h-screen flex items-center justify-center">
+            <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-xl border border-gray-200">
+                <h2 className="text-center text-3xl font-extrabold text-gray-900 mb-6">
+                    Create your account
+                </h2>
+
+                {error && (
+                    <div className="bg-red-100 text-red-700 p-3 mb-4 rounded text-center font-medium">
+                        {error}
+                    </div>
+                )}
+
+                <input
                     type="text"
                     placeholder="Name"
                     value={user.name}
                     onChange={(e) => setUser({ ...user, name: e.target.value })}
-                    className="w-full px-4 mb-4 py-2 border rounded placeholder-gray-400 text-black"
-                    />
-                    <input
+                    className="w-full px-4 py-2 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent text-black"
+                />
+                <input
                     type="email"
                     placeholder="Email"
                     value={user.email}
                     onChange={(e) => setUser({ ...user, email: e.target.value })}
-                    className="w-full px-4 mb-4 py-2 border rounded placeholder-gray-400 text-black"
-                    />
-                    <input
+                    className="w-full px-4 py-2 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent text-black"
+                />
+                <input
                     type="password"
                     placeholder="Password"
                     value={user.password}
-                    onChange={(e) => setUser({ ...user, password: e.target.value })}
-                    className="w-full px-4 mb-4 py-2 border rounded placeholder-gray-400 text-black"
-                    />
-                    <button
-                        onClick={handleSubmit}
-                        className="w-full mt-2 px-6 py-2 bg-green-600 text-white rounded-xl hover:bg-green-700 transition"
-                        >
-                        Sign up with email
-                    </button>
-                    <div className="flex items-center my-4">
-                        <hr className="flex-grow border-gray-300" />
-                        <span className="mx-2 text-gray-500">or</span>
-                        <hr className="flex-grow border-gray-300" />
-                    </div>
+                    onChange={(e) =>
+                        setUser({ ...user, password: e.target.value })
+                    }
+                    className="w-full px-4 py-2 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent text-black"
+                />
+                <button
+                    onClick={handleSubmit}
+                    className="w-full mt-2 py-2 px-6 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg transition"
+                >
+                    Sign up with Email
+                </button>
 
-                    <button
-                        onClick={() =>
-                            signIn("google", {
-                                callbackUrl: "/",
-                            })
-                        }
-                        className="w-full px-6 py-2 bg-red-600 text-white rounded-xl hover:bg-red-700 transition"
-                    >
-                        Sign in with Google
-                    </button>
+                <div className="flex items-center my-6">
+                    <hr className="flex-grow border-gray-300" />
+                    <span className="mx-3 text-gray-500">or</span>
+                    <hr className="flex-grow border-gray-300" />
                 </div>
+
+                <button
+                    onClick={() =>
+                        signIn("google", {
+                            callbackUrl: "/",
+                        })
+                    }
+                    className="w-full py-2 px-6 flex items-center justify-center gap-2 bg-white border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-100 transition"
+                >
+                    <img
+                        src="https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-09-512.png"
+                        alt="Google logo"
+                        className="w-5 h-5"
+                    />
+                    <span>Continue with Google</span>
+                </button>
+
+                <p className="mt-6 text-center text-gray-600 text-sm">
+                    Already have an account?{" "}
+                    <Link
+                        href="/sign-in"
+                        className="text-purple-600 font-medium hover:underline"
+                    >
+                        Sign in
+                    </Link>
+                </p>
             </div>
         </div>
-    )
+    );
 }

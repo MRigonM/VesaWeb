@@ -3,9 +3,9 @@ import React, { useState } from "react";
 import { router } from "next/client";
 
 export default function SignIn({ csrfToken }: { csrfToken: string }) {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
 
     const handleSubmit = async (e: React.FormEvent) => {
         setError("");
@@ -23,64 +23,71 @@ export default function SignIn({ csrfToken }: { csrfToken: string }) {
     };
 
     return (
-        <div className="pt-12">
-            <div className="flex flex-col items-center justify-center min-h-screen gap-y-20">
-                <div className="mb-10 max-w-2xl mx-auto bg-white p-6 rounded-xl shadow-md">
-                    <h2 className="text-black text-2xl font-semibold mb-4">
-                        Sign In
-                    </h2>
-                    {error && (
-                        <div className="bg-red-100 text-red-700 p-2 mb-4 rounded">
-                            {error}
-                        </div>
-                    )}
-                    <form onSubmit={handleSubmit}>
-                        <input
-                            type="email"
-                            placeholder="Email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            className="w-full px-4 mb-4 py-2 border rounded placeholder-gray-400 text-black"
-                        />
-                        <input
-                            type="password"
-                            placeholder="Password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            className="w-full px-4 mb-4 py-2 border rounded placeholder-gray-400 text-black"
-                        />
-                        <button
-                            type="submit"
-                            className="w-full mt-2 px-6 py-2 bg-green-600 text-white rounded-xl hover:bg-green-700 transition"
-                        >
-                            Sign in with Email
-                        </button>
-                    </form>
+        <div className="pt-12 bg-gradient-to-r from-purple-100 to-blue-100 min-h-screen flex items-center justify-center">
+            <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-xl border border-gray-200">
+                <h2 className="text-center text-3xl font-extrabold text-gray-900 mb-6">
+                    Sign in
+                </h2>
 
-                    <div className="flex items-center my-4">
-                        <hr className="flex-grow border-gray-300" />
-                        <span className="mx-2 text-gray-500">or</span>
-                        <hr className="flex-grow border-gray-300" />
+                {error && (
+                    <div className="bg-red-100 text-red-700 p-3 mb-4 rounded text-center font-medium">
+                        {error}
                     </div>
+                )}
 
+                <form onSubmit={handleSubmit} className="space-y-4">
+                    <input
+                        type="email"
+                        placeholder="Email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent text-black"
+                    />
+                    <input
+                        type="password"
+                        placeholder="Password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent text-black"
+                    />
                     <button
-                        onClick={() =>
-                            signIn("google", {
-                                callbackUrl: "/",
-                            })
-                        }
-                        className="w-full px-6 py-2 bg-red-600 text-white rounded-xl hover:bg-red-700 transition"
+                        type="submit"
+                        className="w-full py-2 px-6 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg transition"
                     >
-                        Sign in with Google
+                        Sign in with Email
                     </button>
+                </form>
+
+                <div className="flex items-center my-6">
+                    <hr className="flex-grow border-gray-300" />
+                    <span className="mx-3 text-gray-500">or</span>
+                    <hr className="flex-grow border-gray-300" />
                 </div>
+
+                <button
+                    onClick={() =>
+                        signIn("google", {
+                            callbackUrl: "/",
+                        })
+                    }
+                    className="w-full py-2 px-6 flex items-center justify-center gap-2 bg-white border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-100 transition"
+                >
+                    <img
+                        src="https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-09-512.png"
+                        alt="Google logo"
+                        className="w-5 h-5"
+                    />
+                    <span>Continue with Google</span>
+                </button>
             </div>
         </div>
     );
 }
-SignIn.getInitialProps = async ( context : any) => {
+
+SignIn.getInitialProps = async (context: any) => {
     return {
-        csrfToken : await getCsrfToken(context),
+        csrfToken: await getCsrfToken(context),
     };
 };
+
 SignIn.displayName = "Sign In | My Application";

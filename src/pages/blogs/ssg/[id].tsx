@@ -19,14 +19,21 @@ export const getStaticProps: GetStaticProps = async ({params}) => {
 
 export default function Blog({post}: any) {
     return (
-        <div className="pt-12 px-20 flex flex-col items-center justify-center min-h-screen gap-y-20">
-            <h2 className="text-4xl text-center font-bold mb-6 text-black pt-20">
-                SSG Post ID : {post.id}
-            </h2>
-            <h1 className="text-4xl text-center font-bold mb-6 text-yellow-600 line-clamp-2 uppercase">{post.title}</h1>
-            <p className="text-sm text-gray-500 mt-4">{post.body}</p>
-
-            <p className="text-sm text-gray-500"> Renderuar ne build time </p>
-        </div>
-    );
+        <div className="min-h-screen flex flex-col justify-center items-center bg-gray-50 px-6">
+      <h2 className="text-3xl sm:text-4xl font-extrabold text-purple-800 mb-10 text-center">
+        Static Site Generated Blog
+      </h2>
+      <div className="w-full max-w-3xl bg-white shadow-2xl rounded-3xl p-10 sm:p-14 text-center">
+        <h1 className="text-2xl sm:text-3xl font-semibold text-gray-900 uppercase mb-4 line-clamp-2">
+          {post.title}
+        </h1>
+        <p className="text-gray-700 leading-relaxed mb-6">
+          {post.body}
+        </p>
+        <p className="text-sm text-gray-500 italic">
+          Rendered ne build time
+        </p>
+      </div>
+    </div>
+  );
 }

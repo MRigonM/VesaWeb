@@ -45,35 +45,33 @@ export  default function UpdateNews(){
 
     if(loading) return <p className="text-center mt-10">Loading...</p>
 
-    return(
-    <div className="pt-12">
-        <div className="flex flex-col items-center justify-center min-h-screen gap-y-20">
-            <div className="mb-10 max-w-2xl mx-auto bg-white p-6 rounded-xl shadow-md">
-                <h2 className="text-black text-2xl font-semibold mb-4">
+    return (
+        <div className="flex items-center justify-center min-h-screen bg-gray-50 px-4">
+            <div className="w-full max-w-2xl bg-white p-8 rounded-2xl shadow-xl">
+                <h2 className="text-3xl font-bold text-center text-purple-700 mb-8">
                     Update News
                 </h2>
                 <input
                     type="text"
-                    placeholder="Title"
+                    placeholder="Enter title"
                     value={newNews.title}
                     onChange={(e) => setNewNews({ ...newNews, title: e.target.value })}
-                    className="w-full px-4 py-2 mb-4 border rounded placeholder-gray-400 text-black"
+                    className="w-full px-4 py-3 mb-5 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 text-black placeholder-gray-400"
                 />
                 <textarea
-                    placeholder="Content-"
+                    placeholder="Enter content"
                     value={newNews.body}
                     onChange={(e) => setNewNews({ ...newNews, body: e.target.value })}
-                    className="w-full px-4 py-2 mb-4 border rounded placeholder-gray-400 text-black"
+                    className="w-full px-4 py-3 mb-6 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 text-black placeholder-gray-400 min-h-[150px]"
                 />
                 <button
                     onClick={handleUpdate}
-                    className="px-6 py-2 bg-green-600 text-white rounded-xl hover:bg-green-700 transition"
-                    >
-                    Update News
+                    className="w-full bg-purple-700 hover:bg-purple-800 text-white py-3 rounded-xl text-lg font-semibold transition"
+                >
+                    Update Blog
                 </button>
             </div>
         </div>
-    </div>
-    )
+    );
 }
 UpdateNews.displayName = "UpdateNews | My app";

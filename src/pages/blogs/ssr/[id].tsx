@@ -1,33 +1,33 @@
 ﻿//Static Site Generation (SSG) with Next.js
-import { GetStaticPaths, GetServerSideProps } from "next";
+import {GetStaticPaths, GetServerSideProps} from "next";
 
-// export const getStaticPaths: GetStaticPaths = async () => {
-// return {
-//     paths: [],
-//     fallback: "blocking",
-// }
-// }
-
-export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+export const getServerSideProps: GetServerSideProps = async ({params}) => {
     console.log("params", params);
 
     const res = await fetch(`https://json-placeholder.mock.beeceptor.com/posts/${params?.id}`);
     const post = await res.json();
-    return {props: { post } };
+    return {props: {post}};
 
 
 }
 
-export default function Blog({ post }: any ) {
+export default function Blog({post}: any) {
     return (
-       <div className="pt-12 px-20 flex flex-col items-center justify-center min-h-screen gap-y-20">
-            <h2 className="text-4xl text-center font-bold mb-6 text-black pt-20">
-            SSG Post ID : {post.id}
+        <div className="min-h-screen flex flex-col justify-center items-center bg-gray-50 px-6">
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-purple-800 mb-10 text-center">
+                SSR
             </h2>
-            <h1 className="text-4xl text-center font-bold mb-6 text-yellow-600 line-clamp-2 uppercase">{post.title}</h1>
-            <p className="text-sm text-gray-500 mt-4">{post.body}</p>
-
-            <p className="text-sm text-gray-500"> Renderuar ne cdo request nga serveri </p>
+            <div className="w-full max-w-3xl bg-white shadow-2xl rounded-3xl p-10 sm:p-14 text-center">
+                <h1 className="text-2xl sm:text-3xl font-semibold text-gray-900 uppercase mb-4 line-clamp-2">
+                    {post.title}
+                </h1>
+                <p className="text-gray-700 leading-relaxed mb-6">
+                    {post.body}
+                </p>
+                <p className="text-sm text-gray-500 italic">
+                    Rendered by server requests
+                </p>
             </div>
+        </div>
     );
 }
