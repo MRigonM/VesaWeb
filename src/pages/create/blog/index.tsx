@@ -31,7 +31,7 @@ export  default function CreateBlog(){
         if (!newBlog.title || !newBlog.body) return;
         await post(newBlog);
         setNewBlog({title :"", body:""});
-        router.push("/blogs");
+        router.push("/admin/dashboard");
     };
     return(
     <div className="pt-12">

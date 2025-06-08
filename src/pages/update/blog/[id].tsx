@@ -40,7 +40,7 @@ export  default function UpdateBlog(){
     const handleUpdate = async () => {
         if(!newBlog.title || !newBlog.body || !id) return;
         await put(newBlog);
-        router.push("/blogs");
+        router.push("/admin/dashboard");
     }
 
     if(loading) return <p className="text-center mt-10">Loading...</p>

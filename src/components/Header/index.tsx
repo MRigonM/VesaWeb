@@ -18,9 +18,10 @@ export function Header() {
     { name: "Home", pathName: "/" },
     { name: "About", pathName: "/about" },
     { name: "Contact Us", pathName: "/contact" },
-    { name: "Courses", pathName: "/blogs" },
+    {name: "Courses", pathName: "/blogs"},
+    {name: "News", pathName: "/news"},
     // ✅ Only show News if admin
-    ...(isAdmin ? [{ name: "News", pathName: "/news" }] : []),
+    ...(isAdmin ? [{ name: "Dashboard", pathName: "/admin/dashboard" }] : []),
   ];
 
   return (
