@@ -26,6 +26,7 @@ export function Header() {
     <header className="fixed z-50 w-full bg-white border-b shadow-sm transition-all duration-300">
       <div className="container mx-auto px-6 py-3 flex items-center justify-between">
         <Link href="/">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={Logo.src} alt="Logo" className="h-10 cursor-pointer " />
         </Link>
 

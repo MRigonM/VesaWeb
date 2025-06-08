@@ -110,7 +110,7 @@ export default function About() {
                         <Heart size={40} className="text-purple-600 mb-4" />
                         <h3 className="text-xl font-semibold text-purple-900 mb-2">Care for our Users</h3>
                         <p className="text-gray-600 text-sm leading-relaxed">
-                            Our users' needs always come first. We listen, adapt, and evolve to serve them better.
+                            Our users needs always come first. We listen, adapt, and evolve to serve them better.
                         </p>
                     </motion.div>
                 </div>

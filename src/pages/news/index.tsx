@@ -18,7 +18,7 @@ export default function NewsPage() {
 
     useEffect(() => {
         if (newsData) setNews(newsData);
-    }, [newsData]);
+    }, [newsData, setNews]);
 
     const handleDeleteNews = async (id: string) => {
         const confirmed = confirm("Are you sure you want to delete?");

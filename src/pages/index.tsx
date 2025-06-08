@@ -72,10 +72,10 @@ export default function Home() {
                     Learn anything
                 </h2>
                 <p className="text-gray-700 mb-8 leading-relaxed">
-                    Whether you want to develop as a professional or discover a new hobby, there's an online course for that.
+                    Whether you want to develop as a professional or discover a new hobby, there iss an online course for that.
                     You can even take your learning further with online microcredentials and degrees.
                     Join millions of people from around the world learning together. Online learning is as easy and natural as chatting with a group of friends.
-                    Meet educators from top universities and cultural institutions, who'll share their experience through videos, quizzes and discussions.
+                    Meet educators from top universities and cultural institutions, who will share their experience through videos, quizzes and discussions.
                 </p>
                 <Image
                     src={CustomImage.src}

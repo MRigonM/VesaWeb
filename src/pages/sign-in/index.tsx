@@ -72,6 +72,7 @@ export default function SignIn({ csrfToken }: { csrfToken: string }) {
                     }
                     className="w-full py-2 px-6 flex items-center justify-center gap-2 bg-white border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-100 transition"
                 >
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                         src="https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-09-512.png"
                         alt="Google logo"
