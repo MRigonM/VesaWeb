@@ -30,7 +30,7 @@ Ky projekt është ndërtuar me **Next.js** dhe **TypeScript**. Ndiqni këto hap
    cd vesa-web
 
 2.**Instalo varësitë**
-
+ ```bash
 npm install
 
 3.**Krijo një skedar .env.local dhe vendos variablat e nevojshme të mjedisit**
@@ -41,8 +41,9 @@ NEXTAUTH_URL=http://localhost:3000
 NEXTAUTH_SECRET=your_nextauth_secret
 
 4.Starto aplikacionin në zhvillim
-
+```bash
 npm run dev
 
 
-**Rigon – Zhvillues i vetëm i projektit (Software Engineer)**
+
+
