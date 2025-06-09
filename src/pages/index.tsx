@@ -18,7 +18,7 @@ export interface Post {
 }
 
 export default function Home() {
-    const {data: session} = useSession();
+    const {data: session, status} = useSession();
     const role = (session?.user as any)?.role;
     const {data: initialPosts, loading} = useFetch<Post[]>(
         "https://json-placeholder.mock.beeceptor.com/posts"
@@ -36,6 +36,58 @@ export default function Home() {
             setPosts(posts.filter((post) => post.id !== id));
         }
     };
+
+    const loadFavorites = (email: string) => {
+        try {
+            const data = localStorage.getItem(`favorites_${email}`);
+            return data ? JSON.parse(data) : [];
+        } catch {
+            return [];
+        }
+    };
+
+    const saveFavorites = (email: string, favorites: any[]) => {
+        localStorage.setItem(`favorites_${email}`, JSON.stringify(favorites));
+    };
+
+    const [favoritedIds, setFavoritedIds] = useState<string[]>([]);
+
+    useEffect(() => {
+        if (session?.user?.email) {
+            const stored = loadFavorites(session.user.email);
+            setFavoritedIds(stored.map((fav: any) => fav.id));
+        }
+    }, [session?.user?.email]);
+
+    const handleToggleFavorite = (post: Post) => {
+        if (!session?.user?.email) return;
+
+        const userEmail = session.user.email;
+        const favorites = loadFavorites(userEmail);
+        const exists = favorites.find(
+            (fav: any) => fav.id === post.id && fav.type === "ssg"
+        );
+
+        let updatedFavorites;
+        if (exists) {
+            updatedFavorites = favorites.filter(
+                (fav: any) => fav.id !== post.id || fav.type !== "ssg"
+            );
+        } else {
+            const courseData = {
+                id: post.id,
+                title: post.title,
+                body: post.body,
+                type: "ssg",
+                source: "home",
+            };
+            updatedFavorites = [...favorites, courseData];
+        }
+
+        saveFavorites(userEmail, updatedFavorites);
+        setFavoritedIds(updatedFavorites.map((f: any) => f.id));
+    };
+
 
     return (
         <div className="pt-14 bg-gradient-to-br from-purple-50 to-purple-100 min-h-screen">
@@ -149,31 +201,43 @@ export default function Home() {
                     </div>
                 ) : posts && posts.length > 0 ? (
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        {posts.slice(0, 9).map((post) => (
-                            <motion.section
-                                key={post.id}
-                                className="bg-white p-6 rounded-lg shadow-md flex flex-col justify-between"
-                                initial={{ scale: 0.8 }}
-                                animate={{ scale: 1 }}
-                                transition={{ duration: 1 }}
-                            >
-                                <h3 className="text-2xl font-bold mb-2 text-purple-700 line-clamp-2">
-                                    {post.title}
-                                </h3>
-                                <p className="text-gray-600 mb-4 flex-1 leading-relaxed">
-                                    {post.body}
-                                </p>
-                                {role === "admin" && (
-                                    <div className="flex justify-end">
-                                        <Tooltip title="Delete Post">
-                                            <IconButton onClick={() => handleDelete(post.id)}>
-                                                <Trash className="text-gray-400" />
-                                            </IconButton>
-                                        </Tooltip>
+                        {posts.slice(0, 9).map((post) => {
+                            const isFavorited = favoritedIds.includes(post.id);
+                            return (
+                                <motion.section
+                                    key={post.id}
+                                    className="bg-white p-6 rounded-lg shadow-md flex flex-col justify-between relative"
+                                    initial={{scale: 0.8}}
+                                    animate={{scale: 1}}
+                                    transition={{duration: 1}}
+                                >
+                                    <h3 className="text-2xl font-bold mb-2 text-purple-700 line-clamp-2">
+                                        {post.title}
+                                    </h3>
+                                    <p className="text-gray-600 mb-4 flex-1 leading-relaxed">{post.body}</p>
+
+                                    <div className="flex justify-between items-center mt-4">
+                                        {role === "admin" && (
+                                            <Tooltip title="Delete Post">
+                                                <IconButton onClick={() => handleDelete(post.id)}>
+                                                    <Trash className="text-gray-400"/>
+                                                </IconButton>
+                                            </Tooltip>
+                                        )}
+                                        {status === "authenticated" && (
+                                            <Tooltip title={isFavorited ? "Remove from favorites" : "Add to favorites"}>
+                                                <IconButton onClick={() => handleToggleFavorite(post)}>
+                                                <span className={isFavorited ? "text-red-500" : "text-gray-400"}>
+                                                  {isFavorited ? "❤️" : "🤍"}
+                                                </span>
+                                                </IconButton>
+                                            </Tooltip>
+                                        )}
                                     </div>
-                                )}
-                            </motion.section>
-                        ))}
+                                </motion.section>
+                            );
+                        })}
+
                     </div>
                 ) : (
                     <p className="text-center text-gray-500">
